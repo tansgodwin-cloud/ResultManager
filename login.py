@@ -27,7 +27,8 @@ def kiem_tra_tren_csv(tai_khoan_nhap, mat_khau_nhap):
                 if tai_khoan_nhap == row[0] and mat_khau_nhap == row[1]:
                     return row[2]
     return None
-#HÀM chỉnh sửa login
+
+#HÀM chỉnh sửa login (Chỉ thêm truyền tk_hien_tai)
 def login():
     tk_hien_tai = entry_username.get()
     mk_hien_tai = entry_password.get()
@@ -39,25 +40,26 @@ def login():
         if vai_tro_chon == "Admin":
             if vai_tro_thuc_te == "Admin":
                 messagebox.showinfo("Thành công", "Đăng nhập quyền Quản lý thành công!")
-                open_quan_ly()
+                open_quan_ly(tk_hien_tai) # Bổ sung truyền tên
             else:
                 messagebox.showerror("Từ chối truy cập", "Tài khoản của bạn chỉ là Người dùng bình thường!")
         else:
             messagebox.showinfo("Thành công", "Đăng nhập thành công!")
-            open_home()
+            open_home(tk_hien_tai) # Bổ sung truyền tên
     else:
         messagebox.showerror("Lỗi", "Sai tài khoản hoặc mật khẩu!")
 
 def tao_tk():
     root.destroy()
 
-def open_home():
+# Cập nhật hàm mở để nhận và đẩy tên tài khoản đi
+def open_home(tai_khoan=""):
     root.destroy()
-    subprocess.Popen([sys.executable, "Home.py"])
+    subprocess.Popen([sys.executable, "Home.py", tai_khoan])
 
-def open_quan_ly():
+def open_quan_ly(tai_khoan=""):
     root.destroy()
-    subprocess.Popen([sys.executable, "AccManage.py"])
+    subprocess.Popen([sys.executable, "AccManage.py", tai_khoan])
 
 def back_create(event=None):
     root.destroy()
